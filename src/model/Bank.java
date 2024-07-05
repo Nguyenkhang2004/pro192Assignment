@@ -73,7 +73,7 @@ public class Bank {
 
     public void displayCustomeList(ArrayList<Customer> customerList) {
         customerList.sort(Comparator.comparing(Customer::getFullName));
-        System.out.printf("|%-10s|%-15s|%-11s|%-13s|%-20s|%-11s|\n", 
+        System.out.printf("|%-18s|%-20s|%-15s|%-15s|%-30s|%-12s|\n", 
                 "User-Name", "Full-Name", "Account-Number", "Identification", "Mail", "Phone");
         for(Customer cus : customerList){
             System.out.println(cus);
