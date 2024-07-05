@@ -25,7 +25,7 @@ public class Customer {
 
     public Customer(String username, String password, String fullName, String dob, String phone, String mail, String cccd, String STK, String soDuTaiKhoan)throws IllegalArgumentException {
 
-        this.username = username;
+        setFullName(fullName);
         setPassword(password);
         this.fullName = fullName;
         setDobByString(dob);
@@ -67,8 +67,39 @@ public class Customer {
     }
 
     public boolean isValidMail(String email) {
-        String emailPattern = "^[a-zA-Z0-9._%+-]+@gmail\\.com$";
-        return email != null && email.matches(emailPattern);
+        if (email == null) {
+            return false;
+        }
+
+        String[] domain = {
+            "gmail.com",
+            "yahoo.com",
+            "yahoo.com.vn",
+            "outlook.com",
+            "hotmail.com",
+            "live.com",
+            "icloud.com",
+            "me.com",
+            "mac.com",
+            "zoho.com",
+            "protonmail.com",
+            "yandex.com",
+            "mail.com",
+            "gmx.com",
+            "aol.com",
+            "fpt.edu.vn"
+        };
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        if (email.matches(emailRegex)) {
+            String emailDomain = email.substring(email.indexOf("@") + 1);
+            for (String validDomain : domain) {
+                if (emailDomain.equalsIgnoreCase(validDomain)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     public boolean isValidPhone(String phone) {
@@ -106,7 +137,7 @@ public class Customer {
     }
 
     public void setFullName(String fullName) {
-        this.fullName = fullName;
+        this.fullName = Utils.normalizeName(fullName);
     }
 
     public void setCccd(String cccd) {
@@ -184,6 +215,6 @@ public class Customer {
     }
     @Override
     public String toString() {
-        return String.format("|%-10s|%-15s|%-11s|%-13s|%-20s|%-11s|\n", username, fullName,numberAccount, id, mail, phone);
+        return String.format("|%-18s|%-20s|%-15s|%-15s|%-30s|%-12s|", username, fullName,numberAccount, id, mail, phone);
     }      
 }
